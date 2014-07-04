@@ -10,7 +10,7 @@ class DeviceControllerTest(unittest.TestCase):
         Verify environment is setup properly.
         '''
         self.controller = DeviceController()
-        self.address = ""
+        self.address = "00:12:12:28:10:49"
         self.instruction = "Hello"
     
     def tearDown(self):
