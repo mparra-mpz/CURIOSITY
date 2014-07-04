@@ -57,7 +57,7 @@ class DeviceController():
         problem is found print the error and return false.
         '''
         try:
-            self.sock.cloce()
+            self.sock.close()
         except:
             print str(traceback.format_exc())
             return False

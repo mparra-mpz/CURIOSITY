@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 
 import unittest
-import DeviceController
+from DeviceController import DeviceController
 
 class DeviceControllerTest(unittest.TestCase):
     
