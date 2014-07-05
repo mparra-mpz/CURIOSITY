@@ -44,6 +44,8 @@ class Joystick():
             self.brake = float(self.joystick.get_button(6))
         except:
             print str(traceback.format_exc())
+            return False
+        return True
             
     def disconnect(self):
         '''
