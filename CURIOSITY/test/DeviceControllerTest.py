@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 
 import unittest
+import time
 from DeviceController import DeviceController
 
 class DeviceControllerTest(unittest.TestCase):
@@ -26,28 +27,13 @@ class DeviceControllerTest(unittest.TestCase):
         value = self.controller.get_device_list()
         self.assertTrue(value)
         
-    def test_connect_device(self):
-        '''
-        Verify that the device list was completed without problems.
-        '''
-        value = self.controller.connect_device(self.address)
-        self.controller.disconnect_device()
-        self.assertTrue(value)
-        
-    def test_disconnect_device(self):
-        '''
-        Verify that the device list was completed without problems.
-        '''
-        self.controller.connect_device(self.address)
-        value = self.controller.disconnect_device()
-        self.assertTrue(value)
-        
     def test_send_instruction(self):
         '''
         Verify that the device list was completed without problems.
         '''
         self.controller.connect_device(self.address)
         value = self.controller.send_instruction(self.instruction)
+        time.sleep(5)
         self.controller.disconnect_device()
         self.assertTrue(value)
         
