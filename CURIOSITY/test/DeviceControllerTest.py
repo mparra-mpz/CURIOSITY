@@ -29,7 +29,7 @@ class DeviceControllerTest(unittest.TestCase):
         
     def test_send_instruction(self):
         '''
-        Verify that the device list was completed without problems.
+        Verify that the instruction was send without problems.
         '''
         self.controller.connect_device(self.address)
         value = self.controller.send_instruction(self.instruction)
