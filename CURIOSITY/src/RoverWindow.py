@@ -14,7 +14,7 @@ class RoverWindow(Frame):
         
     def initUI(self):
         self.parent.title("Rover Control Interface")
-        self.pack(fill=BOTH, expand=1)
+        self.pack(side=TOP, fill=BOTH)
         self.bluetooth()
         self.center_window()
         
@@ -28,15 +28,16 @@ class RoverWindow(Frame):
     def bluetooth(self):
         header = Label(self.parent, text="BLUETOOTH")
         header.grid(row=1,column=1)
-        header.pack()
+        header.pack(side=LEFT)
         box = Combobox(self.parent)
         box.grid(row=2,column=1)
-        box.pack()
+        box.pack(side=LEFT)
         button = Button(self.parent, text="Connect")
         button.grid(row=1,column=2)
-        button.pack()
+        button.pack(side=RIGHT)
 
 if __name__ == "__main__":
     root = Tk()
+    root.resizable(0, 0)
     ex = RoverWindow(root, 700, 500)
     root.mainloop() 
