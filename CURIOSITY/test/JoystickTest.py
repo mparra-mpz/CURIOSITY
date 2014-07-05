@@ -25,7 +25,7 @@ class JoystickTest(unittest.TestCase):
         value = True
         value = value and joystick.connect()
         print "Press any key in the joystick."
-        value = value and joystick.get_action()
+        value = value and joystick.get_commands()
         value = value and joystick.disconnect()
         self.assertTrue(value)
         
