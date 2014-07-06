@@ -6,6 +6,8 @@ from Controller import Controller
 
 def control(*args):
     message.set("Set speed and move the Rover")
+    while True:
+        speed.set(controller.gear)
     
 
 if __name__ == "__main__":
@@ -43,9 +45,13 @@ if __name__ == "__main__":
     for element in controller.communication.device_list:
         aux_list.append(element.name)
     box["values"] = aux_list
+    box.current(0)
     
     for child in mainframe.winfo_children(): child.grid_configure(padx=5, pady=5)
     
     root.bind('<Return>', control)
     
     root.mainloop()
+    
+    print "Shutting down."
+    controller.clean_up()
