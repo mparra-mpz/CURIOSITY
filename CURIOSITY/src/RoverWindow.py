@@ -2,17 +2,20 @@
 
 from Tkinter import *
 from ttk import *
-import time
+from Controller import Controller
 
-def calculate(*args):
-    for i in range (4):
-        time.sleep(1)
-        print i
-        speed.set(i)
-    joystick_entry.insert(0, "USB")
+def control(*args):
+    controller.initialize()
+    joystick_entry.insert(0, controller.joystick.name)
+    message.set("Set speed and move the Rover")
+    aux_list = []
+    for element in controller.communication.device_list:
+        aux_list.append(element.name)
+    box["values"] = aux_list
     
 
 if __name__ == "__main__":
+    controller = Controller()
     root = Tk()
     root.title("Robot Control Interface")
     
@@ -26,17 +29,21 @@ if __name__ == "__main__":
     joystick_entry.grid(column=2, row=1, sticky=(W, E))
     
     Label(mainframe, text="Bluetooth").grid(column=1, row=2, sticky=W)
-    Combobox(mainframe).grid(column=2, row=2, sticky=W)
+    box_value = StringVar()
+    box = Combobox(mainframe, textvariable=box_value)
+    box.grid(column=2, row=2, sticky=W)
     
     Label(mainframe, text="Speed").grid(column=1, row=3, sticky=W)
     speed = Scale(mainframe, from_=0, to=6, orient=HORIZONTAL, length=175)
     speed.grid(column=2, row=3, sticky=W)
     
-    Button(mainframe, text="Connect", command=calculate).grid(column=3, row=3, sticky=E)
+    Button(mainframe, text="Connect", command=control).grid(column=3, row=3, sticky=E)
+    
+    message = StringVar()
+    Label(mainframe, textvariable=message).grid(column=2, row=4, sticky=W)
     
     for child in mainframe.winfo_children(): child.grid_configure(padx=5, pady=5)
     
-    joystick_entry.focus()
-    root.bind('<Return>', calculate)
+    root.bind('<Return>', control)
     
     root.mainloop()
