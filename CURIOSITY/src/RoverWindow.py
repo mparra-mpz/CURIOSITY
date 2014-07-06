@@ -5,17 +5,10 @@ from ttk import *
 from Controller import Controller
 
 def control(*args):
-    controller.initialize()
-    joystick_entry.insert(0, controller.joystick.name)
     message.set("Set speed and move the Rover")
-    aux_list = []
-    for element in controller.communication.device_list:
-        aux_list.append(element.name)
-    box["values"] = aux_list
     
 
 if __name__ == "__main__":
-    controller = Controller()
     root = Tk()
     root.title("Robot Control Interface")
     
@@ -41,6 +34,15 @@ if __name__ == "__main__":
     
     message = StringVar()
     Label(mainframe, textvariable=message).grid(column=2, row=4, sticky=W)
+    
+    controller = Controller()
+    controller.initialize()
+    joystick_entry.insert(0, controller.joystick.name)
+    
+    aux_list = []
+    for element in controller.communication.device_list:
+        aux_list.append(element.name)
+    box["values"] = aux_list
     
     for child in mainframe.winfo_children(): child.grid_configure(padx=5, pady=5)
     
