@@ -4,10 +4,16 @@ from Tkinter import *
 from ttk import *
 from Controller import Controller
 
-def control(*args):
+def connect(*args):
     message.set("Set speed and move the Rover")
-    while True:
-        speed.set(controller.gear)
+    c_button["state"] = "disabled"
+    q_button["state"] = "enabled"
+    
+def disconnect(*args):
+    box.current(0)
+    c_button["state"] = "enabled"
+    q_button["state"] = "disabled"
+    
     
 
 if __name__ == "__main__":
@@ -28,20 +34,20 @@ if __name__ == "__main__":
     box = Combobox(mainframe, textvariable=box_value)
     box.grid(column=2, row=2, sticky=W)
     
-    Label(mainframe, text="Speed").grid(column=1, row=3, sticky=W)
-    speed = Scale(mainframe, from_=0, to=6, orient=HORIZONTAL, length=175)
-    speed.grid(column=2, row=3, sticky=W)
-    
-    Button(mainframe, text="Connect", command=control).grid(column=3, row=3, sticky=E)
+    c_button = Button(mainframe, text="Connect", command=connect)
+    c_button.grid(column=3, row=2, sticky=E)
     
     message = StringVar()
-    Label(mainframe, textvariable=message).grid(column=2, row=4, sticky=W)
+    Label(mainframe, textvariable=message).grid(column=2, row=3, sticky=W)
+    
+    q_button = Button(mainframe, text="Disconnect", command=disconnect, state=DISABLED)
+    q_button.grid(column=3, row=4, sticky=E)
     
     controller = Controller()
     controller.initialize()
     joystick_entry.insert(0, controller.joystick.name)
     
-    aux_list = []
+    aux_list = ["Bluetooth Devices"]
     for element in controller.communication.device_list:
         aux_list.append(element.name)
     box["values"] = aux_list
@@ -49,9 +55,8 @@ if __name__ == "__main__":
     
     for child in mainframe.winfo_children(): child.grid_configure(padx=5, pady=5)
     
-    root.bind('<Return>', control)
+    root.bind('<Return>', connect)
+    
+    root.bind('<Return>', disconnect)
     
     root.mainloop()
-    
-    print "Shutting down."
-    controller.clean_up()
