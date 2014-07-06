@@ -66,6 +66,15 @@ class Joystick():
             print str(traceback.format_exc())
             return False
         return True
+    
+    def clear_commmands(self):
+        '''
+        Remove all the pending commands from the queue.
+        '''
+        try:
+            pygame.event.clear()
+        except:
+            print str(traceback.format_exc())
             
     def disconnect(self):
         '''
