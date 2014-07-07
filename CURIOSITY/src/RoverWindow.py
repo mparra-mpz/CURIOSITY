@@ -18,12 +18,10 @@ def connect(*args):
 def disconnect(*args):
     message.set("")
     box.current(0)
-    c_button["state"] = "enabled"
     q_button["state"] = "disabled"
     c_thread.stop_communication()
-    time.sleep(1)
-    if c_thread.isAlive():
-        print "Fail the thread was not stopped."
+    time.sleep(3)
+    controller.clean_up()
 
 if __name__ == "__main__":
     root = Tk()
