@@ -24,7 +24,7 @@ def disconnect(*args):
     while c_thread.isAlive():
         print "Waiting to release the thread."
         time.sleep(1)
-        controller.clean_up()
+    controller.clean_up()
 
 if __name__ == "__main__":
     root = Tk()
