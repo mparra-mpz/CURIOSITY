@@ -20,10 +20,9 @@ def disconnect(*args):
     box.current(0)
     q_button["state"] = "disabled"
     c_thread.stop_communication()
-    print ("Waiting to release the thread.")
     time.sleep(3)
     while c_thread.isAlive():
-        print (".")
+        print "Waiting to release the thread."
         time.sleep(1)
         controller.clean_up()
 
