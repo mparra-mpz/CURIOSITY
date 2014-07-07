@@ -34,12 +34,29 @@ class Controller():
             self.communication.disconnect_device()
         except:
             print str(traceback.format_exc())
+            
+    def get_rover_list(self):
+        '''
+        Return the bluetooth communication list.
+        '''
+        try:
+            blue_list = ["None"]
+            for device in self.communication.device_list:
+                blue_list.append(device.name)
+            return blue_list
+        except:
+            print str(traceback.format_exc())
+            return None
     
-    def initialize_rover_communication(self, device):
+    def initialize_rover_communication(self, name):
         '''
         Initialize the bluetooth communication.
         '''
         try:
+            for element in self.communication.device_list:
+                if name == element.name:
+                    device = element
+                    break
             self.communication.connect_device(device.address)
         except:
             print str(traceback.format_exc())

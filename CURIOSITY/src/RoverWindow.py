@@ -2,19 +2,28 @@
 
 from Tkinter import *
 from ttk import *
+import time
 from Controller import Controller
+from ControllerThread import ControllerThread
 
 def connect(*args):
     message.set("Set speed and move the Rover")
     c_button["state"] = "disabled"
     q_button["state"] = "enabled"
+    controller.initialize_rover_communication(str(box.get()))
+    c_thread.set_controller(controller)
+    c_thread.setDaemon(True)
+    c_thread.start()
     
 def disconnect(*args):
+    message.set("")
     box.current(0)
     c_button["state"] = "enabled"
     q_button["state"] = "disabled"
-    
-    
+    c_thread.stop_communication()
+    time.sleep(1)
+    if c_thread.isAlive():
+        print "Fail the thread was not stopped."
 
 if __name__ == "__main__":
     root = Tk()
@@ -44,19 +53,20 @@ if __name__ == "__main__":
     q_button.grid(column=3, row=4, sticky=E)
     
     controller = Controller()
+    c_thread = ControllerThread()
     controller.initialize()
     joystick_entry.insert(0, controller.joystick.name)
     
-    aux_list = ["Bluetooth Devices"]
-    for element in controller.communication.device_list:
-        aux_list.append(element.name)
-    box["values"] = aux_list
+    box["values"] = controller.get_rover_list()
     box.current(0)
     
     for child in mainframe.winfo_children(): child.grid_configure(padx=5, pady=5)
     
+    box.bind("<<ComboboxSelected>>")
+    
     root.bind('<Return>', connect)
     
     root.bind('<Return>', disconnect)
+    
     
     root.mainloop()
