@@ -12,38 +12,45 @@ class Device():
         self.name = name
         self.address = address
             
-class DeviceController():
+class Communication():
     
     def __init__(self):
         '''
         Initialize class attributes.
         '''
         self.port = 1
-        self.device_list = []
+        self.bluetooth_list = []
         self.sock = None
         
-    def get_device_list(self):
+    def get_bluetooth_list(self):
         '''
-        Return true if the device list was retrieved, if a problem is
-        found print the error and return false.
+        Return the bluetooth name list retrieve by the computer, if a
+        problem is found print the error and return None
         '''
         try:
+            tmp_list = []
             address_list = bluetooth.discover_devices()
             for address in address_list:
                 name = str(bluetooth.lookup_name(address))
                 auxiliar = Device(name, address)
-                self.device_list.append(auxiliar)
+                self.bluetooth_list.append(auxiliar)
+                tmp_list.append(name)
         except:
             print str(traceback.format_exc())
-            return False
-        return True
+        if len(tmp_list) == 0:
+            tmp_list.append("--- Empty ---")
+        return tmp_list
             
-    def connect_device(self, address):
+    def connect(self, bluetooth_name):
         '''
         Return true if the device accept the connection, if a problem
         is found print the error and return false.
         '''
         try:
+            address = "-1"
+            for element in self.bluetooth_list:
+                if element.name == bluetooth_name:
+                    address = element.address
             self.sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
             self.sock.connect((address, self.port))
         except:
@@ -51,7 +58,7 @@ class DeviceController():
             return False
         return True
     
-    def disconnect_device(self):
+    def disconnect(self):
         '''
         Return true if the device accept the disconnection, if a
         problem is found print the error and return false.

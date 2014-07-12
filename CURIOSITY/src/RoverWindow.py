@@ -12,6 +12,8 @@ class RoverWindow():
         '''
         Initialize class attributes.
         '''
+        self.control = Controller()
+        self.control_thread = ControllerThread()
         self.root = Tk()
         self.root.title("Robot Control Interface")
         self.mainframe = None
@@ -47,7 +49,7 @@ class RoverWindow():
         value = StringVar()
         self.combo_joystick = Combobox(self.mainframe, textvariable=value)
         self.combo_joystick.grid(column=2, row=1, sticky=(W, E))
-        self.combo_joystick["values"] = ["Simulated Joystick", "Real Joystick"]
+        self.combo_joystick["values"] = self.control.get_joystick_list()
         self.combo_joystick.bind("<<ComboboxSelected>>")
 
     def bluetooth_section(self):
@@ -57,7 +59,7 @@ class RoverWindow():
         value = StringVar()
         self.combo_bluetooth = Combobox(self.mainframe, textvariable=value)
         self.combo_bluetooth.grid(column=2, row=3, sticky=W)
-        self.combo_bluetooth["values"] = ["Simulated Bluetooth", "Real Bluetooth"]
+        self.combo_bluetooth["values"] = self.control.get_bluetooth_list()
         self.combo_bluetooth.bind("<<ComboboxSelected>>")
         self.button_bluetooth = Button(self.mainframe, text="Connect", command=self.connect)
         self.button_bluetooth.grid(column=3, row=1, sticky=E)
@@ -73,22 +75,28 @@ class RoverWindow():
         '''
         print "Joystick: %s" % self.combo_joystick.get()
         print "Bluetooth: %s" % self.combo_bluetooth.get()
+        self.control.connect(self.combo_joystick.get(), self.combo_bluetooth.get())
         self.message.set("Set speed and move the Rover")
         self.button_bluetooth["state"] = "disabled"
         self.disconnect_button["state"] = "enabled"
         self.speed_update()
+        self.control_thread.start()
 
     def disconnect(self):
         '''
         '''
-        self.message.set("Set speed and move the Rover")
-        self.button_bluetooth["state"] = "disabled"
-        self.disconnect_button["state"] = "enabled"
+        self.control_thread.stop_communication()
+        time.sleep(1)
+        counter = 0
+        while self.control_thread.isAlive() and counter == 15:
+            print "Waiting to release the thread."
+            counter = counter + 1
+            time.sleep(1)
+        self.control.disconnect()
         self.message.set("")
         self.combo_joystick.current(0)
         self.combo_bluetooth.current(0)
         self.disconnect_button["state"] = "disabled"
 
-
 if __name__ == "__main__":
-    win = RoverWindow()
+    gui = RoverWindow()

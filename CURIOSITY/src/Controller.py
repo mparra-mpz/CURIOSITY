@@ -2,66 +2,61 @@
 
 import traceback
 from Joystick import Joystick
-from DeviceController import DeviceController
-from DeviceController import Device
+from Communication import Device
+from Communication import Communication
 
-class Controller():
-    
+class Singleton(type):
+
+    _instances = {}
+
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+        return cls._instances[cls]
+
+class Controller(object):
+
+    __metaclass__ = Singleton
+
     def __init__(self):
         '''
         Initialize class attributes.
         '''
         self.joystick = Joystick()
-        self.communication = DeviceController()
+        self.communication = Communication()
         self.gear = 0
-        
-    def initialize(self):
+
+    def get_joystick_list(self):
         '''
-        Perform the joystick connection and get the bluetooth list.
+        Return the control joystick list.
         '''
-        try:
-            self.joystick.connect()
-            self.communication.get_device_list()
-        except:
-            print str(traceback.format_exc())
+        return self.joystick.get_joystick_list()
             
-    def clean_up(self):
-        '''
-        Perform the joystick and bluetooth disconnection.
-        '''
-        try:
-            self.joystick.disconnect()
-            self.communication.disconnect_device()
-        except:
-            print str(traceback.format_exc())
-            
-    def get_rover_list(self):
+    def get_bluetooth_list(self):
         '''
         Return the bluetooth communication list.
         '''
-        try:
-            blue_list = ["None"]
-            for device in self.communication.device_list:
-                blue_list.append(device.name)
-            return blue_list
-        except:
-            print str(traceback.format_exc())
-            return None
+        return self.communication.get_bluetooth_list()
     
-    def initialize_rover_communication(self, name):
+    def connect(self, joystick_name, bluetooth_name):
         '''
-        Initialize the bluetooth communication.
+        Initialize the joystick and bluetooth connection.
         '''
-        try:
-            for element in self.communication.device_list:
-                if name == element.name:
-                    device = element
-                    break
-            self.communication.connect_device(device.address)
-        except:
-            print str(traceback.format_exc())
+        if self.joystick.connect(joystick_name) and \
+        self.communication.connect(bluetooth_name):
+            return True
+        return False
+
+    def disconnect(self):
+        '''
+        Perform the joystick and bluetooth disconnection.
+        '''
+        if self.joystick.disconnect() and \
+        self.communication.disconnect():
+            return True
+        return False
             
-    def send_rover_commands(self):
+    def send_commands(self):
         '''
         Read the joystick commands and send it to the rover using a
         bluetooth device.

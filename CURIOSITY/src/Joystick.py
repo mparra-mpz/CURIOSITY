@@ -9,8 +9,8 @@ class Joystick():
         '''
         Initialize class attributes.
         '''
+        self.joystick_list = []
         self.joystick = None
-        self.name = ""
         self.commands = {}
         self.__reset_commands()
         
@@ -24,17 +24,51 @@ class Joystick():
         self.commands["RIGHT"] = False
         self.commands["SPEED"] = False
         self.commands["BREAK"] = False
-        
-    def connect(self):
+
+    def get_joystick_list(self):
+        '''
+        Return a list with the joysticks connected to the computer,
+        if any problem appears print the stack trace an return a
+        string showing an empty list.
+        '''
+        try:
+            joystick_number = pygame.joystick.get_count()
+            for i in range(joystick_number):
+                name = str(pygame.joystick.Joystick(i).get_name())
+                self.joystick_list.append(name)
+        except:
+            print str(traceback.format_exc())
+        if len(self.joystick_list) == 0:
+            self.joystick_list.append("--- Empty ---")
+        return self.joystick_list
+
+    def connect(self, joystick_name):
         '''
         Return true if you can connect to the joystick, return false
+        if a problem is found.
+        '''
+        try:
+            joystick_position = -1
+            joystick_number = pygame.joystick.get_count()
+            for i in range(joystick_number):
+                name = str(pygame.joystick.Joystick(i).get_name())
+                if name == joystick_name:
+                    joystick_position = i
+            pygame.init()
+            self.joystick = pygame.joystick.Joystick(joystick_position)
+            self.joystick.init()
+        except:
+            print str(traceback.format_exc())
+            return False
+        return True
+
+    def disconnect(self):
+        '''
+        Return true if the disconnection is successful, return false
         if any problem appear.
         '''
         try:
-            pygame.init()
-            self.joystick = pygame.joystick.Joystick(0)
-            self.joystick.init()
-            self.name = self.joystick.get_name()
+            pygame.quit()
         except:
             print str(traceback.format_exc())
             return False
@@ -75,15 +109,3 @@ class Joystick():
             pygame.event.clear()
         except:
             print str(traceback.format_exc())
-            
-    def disconnect(self):
-        '''
-        Return true if the disconnection is successful, return false
-        if any problem appear.
-        '''
-        try:
-            pygame.quit()
-        except:
-            print str(traceback.format_exc())
-            return False
-        return True

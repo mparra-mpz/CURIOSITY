@@ -2,7 +2,7 @@
 
 import threading
 import traceback
-from DeviceController import DeviceController
+from Controller import Controller
 
 class ControllerThread(threading.Thread):
     
@@ -11,14 +11,8 @@ class ControllerThread(threading.Thread):
         Initialize class attributes.
         '''
         threading.Thread.__init__(self, group=group, target=target, name=name, verbose=verbose)
-        self.controller = None
+        self.controller = Controller()
         self.state = True
-    
-    def set_controller(self, controller):
-        '''
-        Set the reference to the controller.
-        '''
-        self.controller = controller
         
     def stop_communication(self):
         '''
@@ -33,6 +27,6 @@ class ControllerThread(threading.Thread):
         '''
         try:
             while self.state:
-                self.controller.send_rover_commands()
+                self.controller.send_commands()
         except:
             print str(traceback.format_exc())
