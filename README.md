@@ -1,5 +1,6 @@
 CURIOSITY
 =========
 
-Repository for the first robotic project
-The python code and arduino code will be store on this repository.
+Repository for my first robotic project
+The python code and arduino sketchs will be store on this repository.
+Also the documetation UML diagram and eletronic diagrams.
