@@ -69,6 +69,7 @@ class Joystick():
         if any problem appear.
         '''
         try:
+            self.clear_commmands()
             pygame.quit()
         except:
             print str(traceback.format_exc())
