@@ -27,7 +27,7 @@ class CommunicationTest(unittest.TestCase):
             value = True
         self.assertTrue(value)
         
-    def test_send_instruction(self):
+    def test_send(self):
         '''
         Verify that the instruction was send without problems.
         '''
@@ -35,7 +35,7 @@ class CommunicationTest(unittest.TestCase):
             if "CURIOSITY"in b_name:
                 break
         self.controller.connect(b_name)
-        value = self.controller.send_instruction("Hello")
+        value = self.controller.send("Hello")
         time.sleep(5)
         self.controller.disconnect()
         self.assertTrue(value)

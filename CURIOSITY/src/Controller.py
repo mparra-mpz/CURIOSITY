@@ -2,7 +2,6 @@
 
 import traceback
 from Joystick import Joystick
-from Communication import Device
 from Communication import Communication
 
 class Singleton(type):
@@ -63,63 +62,63 @@ class Controller(object):
         '''
         try:
             command = ""
-            self.joystick.get_commands()
-            if self.joystick.commands["UP"] == True and \
-            self.joystick.commands["DOWN"] == False and \
-            self.joystick.commands["LEFT"] == False and \
-            self.joystick.commands["RIGHT"] == False:
+            j_command = self.joystick.get_commands()
+            if j_command["UP"] == True and \
+            j_command["DOWN"] == False and \
+            j_command["LEFT"] == False and \
+            j_command["RIGHT"] == False:
                 command = "D1"
-                self.communication.send_instruction(command)
-            elif self.joystick.commands["UP"] == True and \
-            self.joystick.commands["DOWN"] == False and \
-            self.joystick.commands["LEFT"] == False and \
-            self.joystick.commands["RIGHT"] == True:
+                self.communication.send(command)
+            elif j_command["UP"] == True and \
+            j_command["DOWN"] == False and \
+            j_command["LEFT"] == False and \
+            j_command["RIGHT"] == True:
                 command = "D2"
-                self.communication.send_instruction(command)
-            elif self.joystick.commands["UP"] == False and \
-            self.joystick.commands["DOWN"] == False and \
-            self.joystick.commands["LEFT"] == False and \
-            self.joystick.commands["RIGHT"] == True:
+                self.communication.send(command)
+            elif j_command["UP"] == False and \
+            j_command["DOWN"] == False and \
+            j_command["LEFT"] == False and \
+            j_command["RIGHT"] == True:
                 command = "D3"
-                self.communication.send_instruction(command)
-            elif self.joystick.commands["UP"] == False and \
-            self.joystick.commands["DOWN"] == True and \
-            self.joystick.commands["LEFT"] == False and \
-            self.joystick.commands["RIGHT"] == True:
+                self.communication.send(command)
+            elif j_command["UP"] == False and \
+            j_command["DOWN"] == True and \
+            j_command["LEFT"] == False and \
+            j_command["RIGHT"] == True:
                 command = "D4"
-                self.communication.send_instruction(command)
-            elif self.joystick.commands["UP"] == False and \
-            self.joystick.commands["DOWN"] == True and \
-            self.joystick.commands["LEFT"] == False and \
-            self.joystick.commands["RIGHT"] == False:
+                self.communication.send(command)
+            elif j_command["UP"] == False and \
+            j_command["DOWN"] == True and \
+            j_command["LEFT"] == False and \
+            j_command["RIGHT"] == False:
                 command = "D5"
-                self.communication.send_instruction(command)
-            elif self.joystick.commands["UP"] == False and \
-            self.joystick.commands["DOWN"] == True and \
-            self.joystick.commands["LEFT"] == True and \
-            self.joystick.commands["RIGHT"] == False:
+                self.communication.send(command)
+            elif j_command["UP"] == False and \
+            j_command["DOWN"] == True and \
+            j_command["LEFT"] == True and \
+            j_command["RIGHT"] == False:
                 command = "D6"
-                self.communication.send_instruction(command)
-            elif self.joystick.commands["UP"] == False and \
-            self.joystick.commands["DOWN"] == False and \
-            self.joystick.commands["LEFT"] == True and \
-            self.joystick.commands["RIGHT"] == False:
+                self.communication.send(command)
+            elif j_command["UP"] == False and \
+            j_command["DOWN"] == False and \
+            j_command["LEFT"] == True and \
+            j_command["RIGHT"] == False:
                 command = "D7"
-                self.communication.send_instruction(command)
-            elif self.joystick.commands["UP"] == True and \
-            self.joystick.commands["DOWN"] == False and \
-            self.joystick.commands["LEFT"] == True and \
-            self.joystick.commands["RIGHT"] == False:
+                self.communication.send(command)
+            elif j_command["UP"] == True and \
+            j_command["DOWN"] == False and \
+            j_command["LEFT"] == True and \
+            j_command["RIGHT"] == False:
                 command = "D8"
-                self.communication.send_instruction(command)
+                self.communication.send(command)
                 
-            if self.joystick.commands["SPEED"] == True and self.gear < 6:
+            if j_command["SPEED"] == True and self.gear < 6:
                 self.gear = self.gear + 1
                 command = "V%d" % self.gear
-                self.communication.send_instruction(command)
-            elif self.joystick.commands["BREAK"] == True and self.gear > 0:
+                self.communication.send(command)
+            elif j_command["BREAK"] == True and self.gear > 0:
                 self.gear = self.gear - 1
                 command = "V%d" % self.gear
-                self.communication.send_instruction(command)
+                self.communication.send(command)
         except:
             print str(traceback.format_exc())

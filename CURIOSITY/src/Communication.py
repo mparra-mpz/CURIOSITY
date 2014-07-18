@@ -70,7 +70,7 @@ class Communication():
             return False
         return True
             
-    def send_instruction(self, instruction):
+    def send(self, instruction):
         ''''
         Return true if the device receive the instruction, if a
         problem is found print the error and return false.
