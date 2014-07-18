@@ -31,10 +31,10 @@ class CommunicationTest(unittest.TestCase):
         '''
         Verify that the instruction was send without problems.
         '''
-        self.controller.connect_device("CURIOSITY")
+        self.controller.connect("CURIOSITY")
         value = self.controller.send_instruction("Hello")
         time.sleep(3)
-        self.controller.disconnect_device()
+        self.controller.disconnect()
         self.assertTrue(value)
         
 if __name__ == '__main__':
