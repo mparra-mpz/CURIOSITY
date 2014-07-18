@@ -99,8 +99,8 @@ class Joystick():
             elif brake ==1.0: self.commands["BREAK"] = True
         except:
             print str(traceback.format_exc())
-            return False
-        return True
+            self.__reset_commands()
+        return self.commands
     
     def clear_commmands(self):
         '''
