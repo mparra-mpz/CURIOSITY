@@ -90,11 +90,11 @@ class JoystickTest(unittest.TestCase):
         Verify that the joystick break command is working without
         problems.
         '''
-        j_command = self.joystick.clear_commmands()
+        self.joystick.clear_commmands()
         print "break using the joystick."
         value = False
         while not value:
-            self.joystick.get_commands()
+            j_command = self.joystick.get_commands()
             value = j_command["BREAK"]
         self.assertTrue(value)
         
