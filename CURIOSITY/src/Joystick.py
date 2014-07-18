@@ -13,6 +13,7 @@ class Joystick():
         self.joystick = None
         self.commands = {}
         self.__reset_commands()
+        pygame.joystick.init()
         
     def __reset_commands(self):
         '''
