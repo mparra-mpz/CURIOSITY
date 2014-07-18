@@ -11,7 +11,7 @@ class CommunicationTest(unittest.TestCase):
         Verify environment is setup properly.
         '''
         self.controller = Communication()
-        self.b_list = None
+        self.b_list = self.controller.get_bluetooth_list()
     
     def tearDown(self):
         '''
@@ -23,7 +23,6 @@ class CommunicationTest(unittest.TestCase):
         Verify that the bluetooth list was retrieve without problems.
         '''
         value = False
-        self.b_list = self.controller.get_bluetooth_list()
         if "Empty" not in self.b_list[0]:
             value = True
         self.assertTrue(value)
