@@ -26,9 +26,9 @@ class JoystickTest(unittest.TestCase):
         problems.
         '''
         self.joystick.clear_commmands()
-        print "Move up using the joystick."
         value = False
         while not value:
+            print "Move up using the joystick."
             j_command = self.joystick.get_commands()
             value = j_command["UP"]
         self.assertTrue(value)
@@ -39,9 +39,9 @@ class JoystickTest(unittest.TestCase):
         problems.
         '''
         self.joystick.clear_commmands()
-        print "Move down using the joystick."
         value = False
         while not value:
+            print "Move down using the joystick."
             j_command = self.joystick.get_commands()
             value = j_command["DOWN"]
         self.assertTrue(value)
@@ -52,9 +52,9 @@ class JoystickTest(unittest.TestCase):
         problems.
         '''
         self.joystick.clear_commmands()
-        print "Move left using the joystick."
         value = False
         while not value:
+            print "Move left using the joystick."
             j_command = self.joystick.get_commands()
             value = j_command["LEFT"]
         self.assertTrue(value)
@@ -65,9 +65,9 @@ class JoystickTest(unittest.TestCase):
         problems.
         '''
         self.joystick.clear_commmands()
-        print "Move right using the joystick."
         value = False
         while not value:
+            print "Move right using the joystick."
             j_command = self.joystick.get_commands()
             value = j_command["RIGHT"]
         self.assertTrue(value)
@@ -78,9 +78,9 @@ class JoystickTest(unittest.TestCase):
         problems.
         '''
         self.joystick.clear_commmands()
-        print "Speed up using the joystick."
         value = False
         while not value:
+            print "Speed up using the joystick."
             j_command = self.joystick.get_commands()
             value = j_command["SPEED"]
         self.assertTrue(value)
@@ -91,9 +91,9 @@ class JoystickTest(unittest.TestCase):
         problems.
         '''
         self.joystick.clear_commmands()
-        print "break using the joystick."
         value = False
         while not value:
+            print "break using the joystick."
             j_command = self.joystick.get_commands()
             value = j_command["BREAK"]
         self.assertTrue(value)
