@@ -9,36 +9,28 @@ class JoystickTest(unittest.TestCase):
         '''
         Verify environment is setup properly.
         '''
-        pass
+        self.joystick = Joystick()
+        j_list = self.joystick.get_joystick_list()
+        self.joystick.connect(j_list[0])
     
     def tearDown(self):
         '''
         Verify environment is tore down properly.
         '''
+        self.joystick.disconnect()
         pass
-    
-    def test_comunication(self):
-        '''
-        Verify that the joystick communication is working without
-        problems.
-        '''
-        joystick = Joystick()
-        value = joystick.connect()        
-        value = value and joystick.disconnect()
-        self.assertTrue(value)
         
     def test_up(self):
         '''
         Verify that the joystick up movement is working without
         problems.
         '''
-        joystick = Joystick()
-        joystick.connect()
-        joystick.clear_commmands()
+        self.joystick.clear_commmands()
         print "Move up using the joystick."
-        joystick.get_commands()
-        value = joystick.commands["UP"]        
-        joystick.disconnect()
+        value = False
+        while not value:
+            self.joystick.get_commands()
+            value = self.joystick.commands["UP"]
         self.assertTrue(value)
         
     def test_down(self):
@@ -46,13 +38,12 @@ class JoystickTest(unittest.TestCase):
         Verify that the joystick down movement is working without
         problems.
         '''
-        joystick = Joystick()
-        joystick.connect()
-        joystick.clear_commmands()
+        self.joystick.clear_commmands()
         print "Move down using the joystick."
-        joystick.get_commands()
-        value = joystick.commands["DOWN"]        
-        joystick.disconnect()
+        value = False
+        while not value:
+            self.joystick.get_commands()
+            value = self.joystick.commands["DOWN"]
         self.assertTrue(value)
         
     def test_left(self):
@@ -60,13 +51,12 @@ class JoystickTest(unittest.TestCase):
         Verify that the joystick left movement is working without
         problems.
         '''
-        joystick = Joystick()
-        joystick.connect()
-        joystick.clear_commmands()
+        self.joystick.clear_commmands()
         print "Move left using the joystick."
-        joystick.get_commands()
-        value = joystick.commands["LEFT"]        
-        joystick.disconnect()
+        value = False
+        while not value:
+            self.joystick.get_commands()
+            value = self.joystick.commands["LEFT"]
         self.assertTrue(value)
         
     def test_right(self):
@@ -74,13 +64,12 @@ class JoystickTest(unittest.TestCase):
         Verify that the joystick right movement is working without
         problems.
         '''
-        joystick = Joystick()
-        joystick.connect()
-        joystick.clear_commmands()
+        self.joystick.clear_commmands()
         print "Move right using the joystick."
-        joystick.get_commands()
-        value = joystick.commands["RIGHT"]        
-        joystick.disconnect()
+        value = False
+        while not value:
+            self.joystick.get_commands()
+            value = self.joystick.commands["RIGHT"]
         self.assertTrue(value)
         
     def test_speed(self):
@@ -88,13 +77,12 @@ class JoystickTest(unittest.TestCase):
         Verify that the joystick speed command is working without
         problems.
         '''
-        joystick = Joystick()
-        joystick.connect()
-        joystick.clear_commmands()
+        self.joystick.clear_commmands()
         print "Speed up using the joystick."
-        joystick.get_commands()
-        value = joystick.commands["SPEED"]        
-        joystick.disconnect()
+        value = False
+        while not value:
+            self.joystick.get_commands()
+            value = self.joystick.commands["SPEED"]
         self.assertTrue(value)
         
     def test_break(self):
@@ -102,13 +90,12 @@ class JoystickTest(unittest.TestCase):
         Verify that the joystick break command is working without
         problems.
         '''
-        joystick = Joystick()
-        joystick.connect()
-        joystick.clear_commmands()
+        self.joystick.clear_commmands()
         print "break using the joystick."
-        joystick.get_commands()
-        value = joystick.commands["BREAK"]        
-        joystick.disconnect()
+        value = False
+        while not value:
+            self.joystick.get_commands()
+            value = self.joystick.commands["BREAK"]
         self.assertTrue(value)
         
 if __name__ == '__main__':
