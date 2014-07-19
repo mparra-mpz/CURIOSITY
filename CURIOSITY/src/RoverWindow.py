@@ -88,7 +88,7 @@ class RoverWindow():
         self.control_thread.stop_communication()
         time.sleep(1)
         counter = 0
-        while self.control_thread.isAlive() and counter == 15:
+        while self.control_thread.isAlive() and counter < 16:
             print "Waiting to release the thread."
             counter = counter + 1
             time.sleep(1)

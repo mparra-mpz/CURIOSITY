@@ -111,3 +111,12 @@ class Joystick():
             pygame.event.clear()
         except:
             print str(traceback.format_exc())
+            
+    def quit_commands(self):
+        '''
+        Send quit signal to the wait queue.
+        '''
+        try:
+            pygame.event.post(pygame.QUIT)
+        except:
+            print str(traceback.format_exc())

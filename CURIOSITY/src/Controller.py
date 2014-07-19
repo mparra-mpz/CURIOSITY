@@ -54,6 +54,12 @@ class Controller(object):
         self.communication.disconnect():
             return True
         return False
+    
+    def quit_commands(self):
+        '''
+        Send quit signal to the wait queue.
+        '''
+        self.joystick.quit_commands()
             
     def send_commands(self):
         '''

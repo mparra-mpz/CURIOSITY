@@ -20,6 +20,7 @@ class ControllerThread(threading.Thread):
         cylce.
         '''
         self.state = False
+        self.controller.quit_commands()
     
     def run(self):
         '''
