@@ -14,17 +14,32 @@ class MainWindow(QDeclarativeView):
         self.setSource(QUrl.fromLocalFile("Rover.qml"))
         # QML resizes to main window
         self.setResizeMode(QDeclarativeView.SizeRootObjectToView)
-        auxiliar = ["UNO", "DOS"]
-        rc = self.rootContext()
-        rc.setContextProperty("joystick_list", auxiliar)
-        rc.setContextProperty("bluetooth_list", auxiliar)
+        self.rc = self.rootContext()
+        
+    def set_connection(self, joystick, bluetooth):
+        self.rc.setContextProperty("joystick", joystick)
+        self.rc.setContextProperty("bluetooth", bluetooth)
+        self.rc.setContextProperty("speed", 0)
  
  
-if __name__ == '__main__':
-    # Create the Qt Application
+from Controller import Controller
+
+if __name__ == "__main__":
+    control = Controller()
+    joystick_list = control.get_joystick_list()
+    joystick = None
+    for element in joystick_list:
+        if "DragonRise" in element:
+            joystick = element
+            break
+    bluetooth_list = control.get_bluetooth_list()
+    bluetooth = None
+    for element in bluetooth_list:
+        if "CURIOSITY" in element:
+            bluetooth = element
+            break
     app = QApplication(sys.argv)
-    # Create and show the main window
     window = MainWindow()
+    window.set_connection(joystick, bluetooth)
     window.show()
-    # Run the main Qt loop
     sys.exit(app.exec_())

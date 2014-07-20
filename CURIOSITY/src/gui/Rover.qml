@@ -10,7 +10,8 @@ Rectangle {
         y: 0
         c_color: "#222"
         c_text: "Joystick"
-        c_list_model: joystick_list
+        i_color: "#111"
+        c_title_text: joystick
     }
 
     Connection {
@@ -18,7 +19,8 @@ Rectangle {
         y: 90
         c_color: "#222"
         c_text: "Bluetooth"
-        c_list_model: bluetooth_list
+        i_color: "#111"
+        c_title_text: bluetooth
     }
 
     Text {
@@ -36,7 +38,7 @@ Rectangle {
         id: dial
         x: 240
         y: 40
-        value: 50
+        value: speed
     }
 
     ButtonAdapt {

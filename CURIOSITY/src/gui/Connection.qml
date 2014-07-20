@@ -4,7 +4,8 @@ Item {
     id: connection
     property alias c_color: c_rectangle.color
     property alias c_text: c_title.text
-    property alias c_list_model: c_list.model
+    property alias i_color: i_rectangle.color
+    property alias c_title_text: title.text
 
     Rectangle {
         id: c_rectangle
@@ -21,34 +22,23 @@ Item {
             font.pointSize: 13
             color: "#fff"
         }
-        ListView {
-            id: c_list
+
+        Rectangle {
+            id: i_rectangle
             x: 10
             y: 40
             width: 210
             height: 30
-            delegate: Component {
-                Rectangle {
-                    width: 210
-                    height: 30
-                    color: "#111"
-                    clip: true
-                    Text {
-                        id: title
-                        text: c_list_model[0]
-                        elide: Text.ElideRight
-                        color: "white"
-                        font.bold: true
-                        font.pointSize: 9
-                        anchors.leftMargin: 10
-                        anchors.fill: parent
-                        verticalAlignment: Text.AlignVCenter
-                    }
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: console.log(c_list_model[0])
-                    }
-                }
+            color: c_color
+            Text {
+                id: title
+                elide: Text.ElideRight
+                color: "white"
+                font.bold: true
+                font.pointSize: 9
+                anchors.fill: parent
+                anchors.leftMargin: 10
+                verticalAlignment: Text.AlignVCenter
             }
         }
     }
