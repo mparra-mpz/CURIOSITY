@@ -5,6 +5,8 @@ Item {
     property alias ba_text: b_text.text
 
     Rectangle {
+        signal action_command
+
         width: 85
         height: 50
         color: "#111"
@@ -17,7 +19,7 @@ Item {
         }
         MouseArea {
             anchors.fill: parent
-            onClicked: console.log(b_text.text + " clicked")
+            onClicked: {action_command();}
         }
     }
 }
