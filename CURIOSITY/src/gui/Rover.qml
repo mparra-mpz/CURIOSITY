@@ -71,7 +71,7 @@ Rectangle {
         color: "#111"
         radius: 9
         Text {
-            text: "DiConnect"
+            text: "Disconnect"
             color: "#fff"
             font.bold: true
             anchors.centerIn: parent

@@ -58,7 +58,6 @@ class MainWindow(QDeclarativeView):
         '''
         self.control.connect(self.joystick, self.bluetooth)
         self.control_thread.start()
-        print "CONNECT"
         
     def __disconnect_hw(self):
         '''
@@ -72,7 +71,6 @@ class MainWindow(QDeclarativeView):
             time.sleep(1)
             
         self.control.disconnect()
-        print "DISCONNECT"
         sys.exit(0)
 
 
