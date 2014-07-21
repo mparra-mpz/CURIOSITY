@@ -19,7 +19,7 @@ Item {
         }
         MouseArea {
             anchors.fill: parent
-            onClicked: {action_command();}
+            onClicked: action_command()
         }
     }
 }
