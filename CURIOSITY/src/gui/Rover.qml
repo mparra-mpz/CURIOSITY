@@ -1,6 +1,9 @@
 import QtQuick 1.1
 
 Rectangle {
+    signal connection
+    signal disconnection
+
     width: 450
     height: 250
     color: "#222"
@@ -41,15 +44,42 @@ Rectangle {
         value: speed
     }
 
-    ButtonAdapt {
+    Rectangle {
         x: 10
         y: 190
-        ba_text: "Connect"
+        width: 85
+        height: 50
+        color: "#111"
+        radius: 9
+        Text {
+            text: "Connect"
+            color: "#fff"
+            font.bold: true
+            anchors.centerIn: parent
+        }
+        MouseArea {
+            anchors.fill: parent
+            onClicked: connection()
+        }
     }
 
-    ButtonAdapt {
+    Rectangle {
         x: 135
         y: 190
-        ba_text: "Disconnect"
+        width: 85
+        height: 50
+        color: "#111"
+        radius: 9
+        Text {
+            text: "DiConnect"
+            color: "#fff"
+            font.bold: true
+            anchors.centerIn: parent
+        }
+        MouseArea {
+            anchors.fill: parent
+            onClicked: disconnection()
+        }
     }
+
 }
