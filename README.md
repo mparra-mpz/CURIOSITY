@@ -12,4 +12,4 @@ Repository for my first robotic project. The pythoncode , arduino sketchs and th
 - Third Party Libraries: PyGame (http://www.pygame.org/)
 - Third Party Libraries: PySide (http://qt-project.org/wiki/pyside/).
 
-Thanks to all the people that works on this projects.
+Thanks to all the people that works on this amazing projects.
