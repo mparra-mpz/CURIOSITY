@@ -13,3 +13,6 @@ Repository for my first robotic project. The pythoncode , arduino sketchs and th
 - Third Party Libraries: PySide (http://qt-project.org/wiki/pyside/).
 
 Thanks to all the people that works on this amazing projects.
+
+The PYTHONPATH should be modified adding the  CONTROL class, for example you should type the following command before start the application (in the future a rpm should install and set the configurations necessaries in you computer):
+- export PYTHONPATH=~/git/CURIOSITY/CURIOSITY/src/control
