@@ -8,13 +8,13 @@ from PySide.QtDeclarative import *
 from Controller import Controller
 from ControllerThread import ControllerThread
  
-class MainWindow(QDeclarativeView):
+class Rover(QDeclarativeView):
    
     def __init__(self, parent=None):
         '''
         Initialize the attributes class.
         '''
-        super(MainWindow, self).__init__(parent)
+        super(Rover, self).__init__(parent)
         self.setWindowTitle("Robotic Control Interface")
         self.setSource(QUrl.fromLocalFile("Rover.qml"))
         self.setResizeMode(QDeclarativeView.SizeRootObjectToView)
@@ -76,7 +76,7 @@ class MainWindow(QDeclarativeView):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = MainWindow()
+    window = Rover()
     window.set_connection()
     window.set_event_signal()
     window.show()
