@@ -7,6 +7,7 @@ from PySide.QtGui import *
 from PySide.QtDeclarative import *
 from Controller import Controller
 from ControllerThread import ControllerThread
+from Speed import Speed
  
 class Rover(QDeclarativeView):
    
@@ -25,6 +26,7 @@ class Rover(QDeclarativeView):
         self.control_thread = ControllerThread()
         self.joystick = None
         self.bluetooth = None
+        self.speed = 0.0
         
     def set_connection(self):
         '''
@@ -44,7 +46,7 @@ class Rover(QDeclarativeView):
                 break
         self.rc.setContextProperty("bluetooth", self.bluetooth)
         
-        self.rc.setContextProperty("speed", 0)
+        self.rc.setContextProperty("speed", self.speed)
         
     def set_event_signal(self):
         '''
@@ -55,12 +57,14 @@ class Rover(QDeclarativeView):
         
     def __connect_hw(self):
         '''
+        Connect to the CONTROL software.
         '''
         self.control.connect(self.joystick, self.bluetooth)
         self.control_thread.start()
         
     def __disconnect_hw(self):
         '''
+        Disconnect from the CONTROL software.
         '''
         self.control_thread.stop_communication()
         time.sleep(1)
@@ -73,11 +77,33 @@ class Rover(QDeclarativeView):
         self.control.disconnect()
         sys.exit(0)
 
+    def update(self, observer):
+        '''
+        Method to update the speed.
+        '''
+        self.speed = observer.speed
+        self.rc.setContextProperty("speed", self.speed)
+
+
+import time
+from threading import Thread
+tag = True
+def loop(speed):
+    print "loop"
+    while tag:
+        speed.calculate_speed()
+        print speed.speed
+        time.sleep(1)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = Rover()
+    updater = Speed()
+    updater.register_observer(window)
+    t = Thread(target=loop, args=(updater,))
+    t.start()
     window.set_connection()
     window.set_event_signal()
     window.show()
     sys.exit(app.exec_())
+    tag = False
