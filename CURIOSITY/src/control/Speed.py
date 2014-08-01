@@ -1,9 +1,17 @@
 #!/usr/bin/env python
 
-import random
-import time
- 
-class Speed():
+class SingletonSpeed(type):
+
+    _instances = {}
+
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(SingletonSpeed, cls).__call__(*args, **kwargs)
+        return cls._instances[cls]
+    
+class Speed(object):
+    
+    __metaclass__ = SingletonSpeed
    
     def __init__(self):
         '''
@@ -31,9 +39,9 @@ class Speed():
         for observer in self.observers_list:
             observer.update(self)
         
-    def calculate_speed(self):
+    def calculate_speed(self, gear):
         '''
         Calculate current speed.
         '''
-        self.speed = random.random() * 120
+        self.speed = 20 * gear
         self.notify_observers()

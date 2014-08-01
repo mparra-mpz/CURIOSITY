@@ -7,7 +7,6 @@ from PySide.QtGui import *
 from PySide.QtDeclarative import *
 from Controller import Controller
 from ControllerThread import ControllerThread
-from Speed import Speed
  
 class Rover(QDeclarativeView):
    
@@ -83,27 +82,16 @@ class Rover(QDeclarativeView):
         '''
         self.speed = observer.speed
         self.rc.setContextProperty("speed", self.speed)
-
-
-import time
-from threading import Thread
-tag = True
-def loop(speed):
-    print "loop"
-    while tag:
-        speed.calculate_speed()
-        print speed.speed
-        time.sleep(1)
+        
+        
+from Speed import Speed
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = Rover()
     updater = Speed()
     updater.register_observer(window)
-    t = Thread(target=loop, args=(updater,))
-    t.start()
     window.set_connection()
     window.set_event_signal()
     window.show()
     sys.exit(app.exec_())
-    tag = False

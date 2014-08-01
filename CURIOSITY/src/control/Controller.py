@@ -3,19 +3,20 @@
 import traceback
 from Joystick import Joystick
 from Communication import Communication
+from Speed import Speed
 
-class Singleton(type):
+class SingletonController(type):
 
     _instances = {}
 
     def __call__(cls, *args, **kwargs):
         if cls not in cls._instances:
-            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+            cls._instances[cls] = super(SingletonController, cls).__call__(*args, **kwargs)
         return cls._instances[cls]
 
 class Controller(object):
 
-    __metaclass__ = Singleton
+    __metaclass__ = SingletonController
 
     def __init__(self):
         '''
@@ -23,6 +24,7 @@ class Controller(object):
         '''
         self.joystick = Joystick()
         self.communication = Communication()
+        self.speed = Speed()
         self.gear = 0
 
     def get_joystick_list(self):
@@ -120,10 +122,12 @@ class Controller(object):
                 
             if j_command["SPEED"] == True and self.gear < 6:
                 self.gear = self.gear + 1
+                self.speed.calculate_speed(self.gear)
                 command = "V%d" % self.gear
                 self.communication.send(command)
             elif j_command["BREAK"] == True and self.gear > 0:
                 self.gear = self.gear - 1
+                self.speed.calculate_speed(self.gear)
                 command = "V%d" % self.gear
                 self.communication.send(command)
         except:
