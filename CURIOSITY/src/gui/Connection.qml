@@ -30,6 +30,7 @@ Item {
             width: 210
             height: 30
             color: c_color
+            radius: 5
             Text {
                 id: title
                 elide: Text.ElideRight
