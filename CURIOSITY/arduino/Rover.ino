@@ -28,6 +28,16 @@ void setup()
   Serial.println("Finish Arduino setup.");
 }
 
+int setPower(char value)
+{
+  int gear = value - '0';
+  int auxiliar = map(gear, 0, 6, 0, 255);
+  if (auxiliar < 0 || auxiliar > 255) auxiliar = power;
+  Serial.print("Power: ");
+  Serial.println(auxiliar);
+  return auxiliar;
+}
+
 void forward(int value)
 {
   Serial.println("Move FORWARD.");
@@ -70,16 +80,17 @@ void loop()
   if (BTSerial.available())
   {
     data = BTSerial.read();
+    Serial.println(data);
     if (data == 'V')
     {
-      int gear = BTSerial.read() - '0';
-      power = map(gear, 0, 6, 0, 255);
-      Serial.print("Power: ");
-      Serial.println(power);
+      data = BTSerial.read();
+      Serial.println(data);
+      power = setPower(data);
     }
     if (data == 'D')
     {
       data = BTSerial.read();
+      Serial.println(data);
       if (data == '1')
       {
         forward(power);
