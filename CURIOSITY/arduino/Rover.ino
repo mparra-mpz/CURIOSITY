@@ -74,6 +74,15 @@ void left(int value)
   analogWrite(E2, value);
 }
 
+void brake()
+{
+  Serial.println("Brake.");
+  digitalWrite(M1, HIGH);   
+  digitalWrite(M2, HIGH);       
+  analogWrite(E1, 0);
+  analogWrite(E2, 0);
+}
+
 void loop()
 {
   char data;
@@ -127,6 +136,10 @@ void loop()
         left(power);
         forward(power);
       }
+    }
+    if (data != 'V' || data != 'D')
+    {
+      brake();
     }
   }
 }
