@@ -21,10 +21,10 @@
 // # Note: You should connect the GND pin from the DF-MD v1.3 to your MCU controller. They should share the GND pins.
 // #
  
-int E1 = 6;
-int M1 = 7;
-int E2 = 5;                         
-int M2 = 4;                           
+int E1 = 4;
+int M1 = 5;
+int E2 = 6;                         
+int M2 = 7;                           
  
 void setup() 
 { 

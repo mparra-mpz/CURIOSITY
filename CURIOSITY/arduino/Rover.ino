@@ -1,9 +1,9 @@
 #include <SoftwareSerial.h>
  
-#define M2 4
-#define E2 5
-#define E1 6
-#define M1 7
+#define E1 4
+#define M1 5
+#define E2 6
+#define M2 7
 #define RxD 10
 #define TxD 11
 
