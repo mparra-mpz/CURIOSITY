@@ -31,8 +31,13 @@ void setup()
 int setPower(char value)
 {
   int gear = value - '0';
-  int auxiliar = map(gear, 0, 6, 0, 255);
-  if (auxiliar < 0 || auxiliar > 255) auxiliar = power;
+  int auxiliar = 0;
+  if (gear != 0) {
+    auxiliar = map(gear, 1, 6, 130, 255);
+    if (auxiliar < 0 || auxiliar > 255) auxiliar = power;
+  } else {
+    auxiliar = 0;
+  }
   Serial.print("Power: ");
   Serial.println(auxiliar);
   return auxiliar;
@@ -90,6 +95,12 @@ void loop()
   {
     data = BTSerial.read();
     Serial.println(data);
+    if (data == 'B')
+    {
+      data = BTSerial.read();
+      Serial.println(data);
+      if (data == '0') brake;
+    }
     if (data == 'V')
     {
       data = BTSerial.read();
@@ -100,46 +111,10 @@ void loop()
     {
       data = BTSerial.read();
       Serial.println(data);
-      if (data == '1')
-      {
-        forward(power);
-      }
-      if (data == '2')
-      {
-        right(power);
-        forward(power);
-      }
-      if (data == '3')
-      {
-        right(power);
-      }
-      if (data == '4')
-      {
-        right(power);
-        backward(power);
-      }
-      if (data == '5')
-      {
-        backward(power);
-      }
-      if (data == '6')
-      {
-        left(power);
-        backward(power);
-      }
-      if (data == '7')
-      {
-        left(power);
-      }
-      if (data == '8')
-      {
-        left(power);
-        forward(power);
-      }
-    }
-    if (data != 'V' || data != 'D')
-    {
-      brake();
+      if (data == '1') forward(power);
+      if (data == '3') right(power);
+      if (data == '5') backward(power);
+      if (data == '7') left(power);
     }
   }
 }
