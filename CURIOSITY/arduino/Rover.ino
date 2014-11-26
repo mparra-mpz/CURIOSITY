@@ -106,7 +106,7 @@ void loop()
     {
       data = BTSerial.read();
       Serial.println(data);
-      if (data == '0') brake;
+      if (data == '0') brake();
     }
     if (data == 'V')
     {
