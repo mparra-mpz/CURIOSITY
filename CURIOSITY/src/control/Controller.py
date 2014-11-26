@@ -77,12 +77,6 @@ class Controller(object):
             j_command["RIGHT"] == False:
                 command = "D1"
                 self.communication.send(command)
-            elif j_command["UP"] == True and \
-            j_command["DOWN"] == False and \
-            j_command["LEFT"] == False and \
-            j_command["RIGHT"] == True:
-                command = "D2"
-                self.communication.send(command)
             elif j_command["UP"] == False and \
             j_command["DOWN"] == False and \
             j_command["LEFT"] == False and \
@@ -92,32 +86,14 @@ class Controller(object):
             elif j_command["UP"] == False and \
             j_command["DOWN"] == True and \
             j_command["LEFT"] == False and \
-            j_command["RIGHT"] == True:
-                command = "D4"
-                self.communication.send(command)
-            elif j_command["UP"] == False and \
-            j_command["DOWN"] == True and \
-            j_command["LEFT"] == False and \
             j_command["RIGHT"] == False:
                 command = "D5"
-                self.communication.send(command)
-            elif j_command["UP"] == False and \
-            j_command["DOWN"] == True and \
-            j_command["LEFT"] == True and \
-            j_command["RIGHT"] == False:
-                command = "D6"
                 self.communication.send(command)
             elif j_command["UP"] == False and \
             j_command["DOWN"] == False and \
             j_command["LEFT"] == True and \
             j_command["RIGHT"] == False:
                 command = "D7"
-                self.communication.send(command)
-            elif j_command["UP"] == True and \
-            j_command["DOWN"] == False and \
-            j_command["LEFT"] == True and \
-            j_command["RIGHT"] == False:
-                command = "D8"
                 self.communication.send(command)
                 
             if j_command["SPEED"] == True and self.gear < 6:
@@ -129,6 +105,15 @@ class Controller(object):
                 self.gear = self.gear - 1
                 self.speed.calculate_speed(self.gear)
                 command = "V%d" % self.gear
+                self.communication.send(command)
+                
+            if j_command["UP"] == False and \
+            j_command["DOWN"] == False and \
+            j_command["LEFT"] == False and \
+            j_command["RIGHT"] == False and \
+            j_command["SPEED"] == False and \
+            j_command["BREAK"] == False:
+                command = "B0"
                 self.communication.send(command)
         except:
             print str(traceback.format_exc())
