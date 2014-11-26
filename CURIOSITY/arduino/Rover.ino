@@ -10,6 +10,7 @@
 SoftwareSerial BTSerial(RxD, TxD);
 
 int power;
+char movement;
 
 void setup()
 {
@@ -23,6 +24,7 @@ void setup()
   pinMode(E2, OUTPUT);
   
   power = 0;
+  movement = '0';
   
   Serial.begin(9600);
   Serial.println("Finish Arduino setup.");
@@ -50,6 +52,7 @@ void forward(int value)
   digitalWrite(M2, HIGH);       
   analogWrite(E1, value);
   analogWrite(E2, value);
+  movement = '1';
 }
 
 void backward(int value)
@@ -59,6 +62,7 @@ void backward(int value)
   digitalWrite(M2, LOW);       
   analogWrite(E1, value);
   analogWrite(E2, value);
+  movement = '5';
 }
 
 void right(int value)
@@ -67,7 +71,8 @@ void right(int value)
   digitalWrite(M1, HIGH);   
   digitalWrite(M2, LOW);       
   analogWrite(E1, value);
-  analogWrite(E2, value); 
+  analogWrite(E2, value);
+  movement = '3';
 }
 
 void left(int value)
@@ -77,6 +82,7 @@ void left(int value)
   digitalWrite(M2, HIGH);       
   analogWrite(E1, value);
   analogWrite(E2, value);
+  movement = '7';
 }
 
 void brake()
@@ -86,6 +92,7 @@ void brake()
   digitalWrite(M2, HIGH);       
   analogWrite(E1, 0);
   analogWrite(E2, 0);
+  movement = '0';
 }
 
 void loop()
@@ -106,6 +113,10 @@ void loop()
       data = BTSerial.read();
       Serial.println(data);
       power = setPower(data);
+      if (movement == '1') forward(power);
+      if (movement == '3') right(power);
+      if (movement == '5') backward(power);
+      if (movement == '7') left(power);
     }
     if (data == 'D')
     {
