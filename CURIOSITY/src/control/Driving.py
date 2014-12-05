@@ -1,24 +1,25 @@
 #!/usr/bin/env python
 
-class SingletonSpeed(type):
+class SingletonDriving(type):
 
     _instances = {}
 
     def __call__(cls, *args, **kwargs):
         if cls not in cls._instances:
-            cls._instances[cls] = super(SingletonSpeed, cls).__call__(*args, **kwargs)
+            cls._instances[cls] = super(SingletonDriving, cls).__call__(*args, **kwargs)
         return cls._instances[cls]
     
-class Speed(object):
+class Driving(object):
     
-    __metaclass__ = SingletonSpeed
+    __metaclass__ = SingletonDriving
    
     def __init__(self):
         '''
         Initialize the attributes class.
         '''
         self.observers_list = []
-        self.speed = 0.0
+        self.power = 0.0
+        self.angle = 0.0
         
     def register_observer(self, observer):
         '''
@@ -39,9 +40,16 @@ class Speed(object):
         for observer in self.observers_list:
             observer.update(self)
         
-    def calculate_speed(self, gear):
+    def set_power(self, gear):
         '''
-        Calculate current speed.
+        Calculate current rover power.
         '''
-        self.speed = 20 * gear
+        self.power = 20 * gear
+        self.notify_observers()
+        
+    def set_angle(self, angle):
+        '''
+        Calculate current rover rotation.
+        '''
+        self.angle = angle
         self.notify_observers()

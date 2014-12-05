@@ -16,16 +16,26 @@ class Rover(QDeclarativeView):
         '''
         super(Rover, self).__init__(parent)
         self.setWindowTitle("Robotic Control Interface")
+        self.set_default_values()
         self.setSource(QUrl.fromLocalFile("Rover.qml"))
         self.setResizeMode(QDeclarativeView.SizeRootObjectToView)
-        self.rc = self.rootContext()
         self.ro = self.rootObject()
         
         self.control = Controller()
         self.control_thread = ControllerThread()
-        self.joystick = None
-        self.bluetooth = None
+        
+    def set_default_values(self):
+        '''
+        Set the default values to start the GUI.
+        '''
+        self.joystick = ""
+        self.bluetooth = ""
         self.speed = 0.0
+        self.angle = 0.0
+        self.rc = self.rootContext()
+        self.rc.setContextProperty("bluetooth", self.bluetooth)
+        self.rc.setContextProperty("speed", self.speed)
+        self.rc.setContextProperty("angle", self.angle)
         
     def set_connection(self):
         '''
@@ -44,8 +54,6 @@ class Rover(QDeclarativeView):
                 self.bluetooth = element
                 break
         self.rc.setContextProperty("bluetooth", self.bluetooth)
-        
-        self.rc.setContextProperty("speed", self.speed)
         
     def set_event_signal(self):
         '''
@@ -82,14 +90,16 @@ class Rover(QDeclarativeView):
         '''
         self.speed = observer.speed
         self.rc.setContextProperty("speed", self.speed)
+        self.angle = observer.angle
+        self.rc.setContextProperty("angle", self.angle)
         
         
-from Speed import Speed
+from Driving import Driving
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = Rover()
-    updater = Speed()
+    updater = Driving()
     updater.register_observer(window)
     window.set_connection()
     window.set_event_signal()

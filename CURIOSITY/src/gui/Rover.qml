@@ -4,7 +4,7 @@ Rectangle {
     signal connection
     signal disconnection
 
-    width: 450
+    width: 710
     height: 250
     color: "#222"
 
@@ -31,7 +31,7 @@ Rectangle {
         y: 10
         width: 50
         height: 20
-        text: "Speed"
+        text: "Power"
         font.bold: true
         font.pointSize: 13
         color: "#fff"
@@ -42,6 +42,13 @@ Rectangle {
         x: 240
         y: 40
         value: speed
+    }
+
+    Wheel {
+        id: wheel
+        x: 450
+        y: 0
+        value: angle
     }
 
     Rectangle {

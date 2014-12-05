@@ -3,7 +3,7 @@
 import traceback
 from Joystick import Joystick
 from Communication import Communication
-from Speed import Speed
+from Driving import Driving
 
 class SingletonController(type):
 
@@ -24,7 +24,7 @@ class Controller(object):
         '''
         self.joystick = Joystick()
         self.communication = Communication()
-        self.speed = Speed()
+        self.driving = Driving()
         self.gear = 0
 
     def get_joystick_list(self):
@@ -77,33 +77,37 @@ class Controller(object):
             j_command["RIGHT"] == False:
                 command = "D1"
                 self.communication.send(command)
+                self.driving.set_angle(0.0)
             elif j_command["UP"] == False and \
             j_command["DOWN"] == False and \
             j_command["LEFT"] == False and \
             j_command["RIGHT"] == True:
                 command = "D3"
                 self.communication.send(command)
+                self.driving.set_angle(90.0)
             elif j_command["UP"] == False and \
             j_command["DOWN"] == True and \
             j_command["LEFT"] == False and \
             j_command["RIGHT"] == False:
                 command = "D5"
                 self.communication.send(command)
+                self.driving.set_angle(0.0)
             elif j_command["UP"] == False and \
             j_command["DOWN"] == False and \
             j_command["LEFT"] == True and \
             j_command["RIGHT"] == False:
                 command = "D7"
                 self.communication.send(command)
+                self.driving.set_angle(-90.0)
                 
             if j_command["SPEED"] == True and self.gear < 6:
                 self.gear = self.gear + 1
-                self.speed.calculate_speed(self.gear)
+                self.driving.set_power(self.gear)
                 command = "V%d" % self.gear
                 self.communication.send(command)
             elif j_command["BREAK"] == True and self.gear > 0:
                 self.gear = self.gear - 1
-                self.speed.calculate_speed(self.gear)
+                self.driving.set_power(self.gear)
                 command = "V%d" % self.gear
                 self.communication.send(command)
                 
@@ -115,5 +119,6 @@ class Controller(object):
             j_command["BREAK"] == False:
                 command = "B0"
                 self.communication.send(command)
+                self.driving.set_angle(0.0)
         except:
             print str(traceback.format_exc())
