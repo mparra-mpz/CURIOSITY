@@ -33,6 +33,7 @@ class Rover(QDeclarativeView):
         self.speed = 0.0
         self.angle = 0.0
         self.rc = self.rootContext()
+        self.rc.setContextProperty("joystick", self.joystick)
         self.rc.setContextProperty("bluetooth", self.bluetooth)
         self.rc.setContextProperty("speed", self.speed)
         self.rc.setContextProperty("angle", self.angle)
@@ -88,7 +89,7 @@ class Rover(QDeclarativeView):
         '''
         Method to update the speed.
         '''
-        self.speed = observer.speed
+        self.speed = observer.power
         self.rc.setContextProperty("speed", self.speed)
         self.angle = observer.angle
         self.rc.setContextProperty("angle", self.angle)
