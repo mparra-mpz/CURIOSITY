@@ -30,12 +30,12 @@ class Rover(QDeclarativeView):
         '''
         self.joystick = ""
         self.bluetooth = ""
-        self.speed = 0.0
+        self.power = 0.0
         self.angle = 0.0
         self.rc = self.rootContext()
         self.rc.setContextProperty("joystick", self.joystick)
         self.rc.setContextProperty("bluetooth", self.bluetooth)
-        self.rc.setContextProperty("speed", self.speed)
+        self.rc.setContextProperty("power", self.power)
         self.rc.setContextProperty("angle", self.angle)
         
     def set_connection(self):
@@ -87,10 +87,10 @@ class Rover(QDeclarativeView):
 
     def update(self, observer):
         '''
-        Method to update the speed.
+        Method to update values in the GUI.
         '''
-        self.speed = observer.power
-        self.rc.setContextProperty("speed", self.speed)
+        self.power = observer.power
+        self.rc.setContextProperty("power", self.power)
         self.angle = observer.angle
         self.rc.setContextProperty("angle", self.angle)
         

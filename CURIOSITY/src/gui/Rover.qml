@@ -41,7 +41,7 @@ Rectangle {
         id: dial
         x: 240
         y: 40
-        value: speed
+        value: power
     }
 
     Wheel {
