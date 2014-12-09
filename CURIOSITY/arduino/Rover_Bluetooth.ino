@@ -35,6 +35,7 @@ int setPower(char value)
   int gear = value - '0';
   int auxiliar = 0;
   if (gear != 0) {
+    //At 130 PWM the rover start to move.
     auxiliar = map(gear, 1, 6, 130, 255);
     if (auxiliar < 0 || auxiliar > 255) auxiliar = power;
   } else {
