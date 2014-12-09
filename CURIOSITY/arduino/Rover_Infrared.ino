@@ -2,8 +2,8 @@
 #define M1 5
 #define E2 6
 #define M2 7
-#define D0 10
-#define D1 11
+#define D0 11
+#define D1 10
 
 int power = 0;
 float cal_value_A0 = 0.0;
