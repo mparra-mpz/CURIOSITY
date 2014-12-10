@@ -6,6 +6,7 @@
 #define D1 10
 
 int power = 0;
+int cal_num = 1000;
 float cal_value_A0 = 0.0;
 float cal_value_A1 = 0.0;
 boolean is_black_A0 = false;
@@ -29,12 +30,12 @@ void setup()
   
   digitalWrite(D0, HIGH);
   digitalWrite(D1, HIGH);
-  for (int i = 0; i < 100; i++) {
+  for (int i = 0; i < cal_num; i++) {
     cal_value_A0 = cal_value_A0 + analogRead(A0);
     cal_value_A1 = cal_value_A1 + analogRead(A1);
   }
-  cal_value_A0 = cal_value_A0 / 100;
-  cal_value_A1 = cal_value_A1 / 100;
+  cal_value_A0 = cal_value_A0 / cal_num;
+  cal_value_A1 = cal_value_A1 / cal_num;
   Serial.print("Black A0: ");
   Serial.print(cal_value_A0);
   Serial.print(" -- Black A1: ");
