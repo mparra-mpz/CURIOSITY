@@ -6,6 +6,7 @@
 #define D1 10
 
 int power = 0;
+char movement = '0';
 int cal_num = 1000;
 float cal_value_A0 = 0.0;
 float cal_value_A1 = 0.0;
@@ -67,6 +68,7 @@ void forward(int value)
   digitalWrite(M2, HIGH);       
   analogWrite(E1, value);
   analogWrite(E2, value);
+  movement = '1';
 }
 
 void backward(int value)
@@ -76,6 +78,7 @@ void backward(int value)
   digitalWrite(M2, LOW);       
   analogWrite(E1, value);
   analogWrite(E2, value);
+  movement = '5';
 }
 
 void right(int value)
@@ -85,6 +88,7 @@ void right(int value)
   digitalWrite(M2, LOW);       
   analogWrite(E1, value);
   analogWrite(E2, value);
+  movement = '3';
 }
 
 void left(int value)
@@ -94,6 +98,7 @@ void left(int value)
   digitalWrite(M2, HIGH);       
   analogWrite(E1, value);
   analogWrite(E2, value);
+  movement = '7';
 }
 
 void brake()
@@ -103,6 +108,7 @@ void brake()
   digitalWrite(M2, HIGH);       
   analogWrite(E1, 0);
   analogWrite(E2, 0);
+  movement = '0';
 }
 
 void loop()
@@ -133,7 +139,9 @@ void loop()
   }
   
   if (is_black_A0 == false && is_black_A1 == false) {
-    brake();
+    if (movement == '1') brake();
+    if (movement == '3') right(power);
+    if (movement == '7') left(power);
   } else if (is_black_A0 == true && is_black_A1 == true) {
     forward(power);
   } else if (is_black_A0 == true && is_black_A1 == false) {
