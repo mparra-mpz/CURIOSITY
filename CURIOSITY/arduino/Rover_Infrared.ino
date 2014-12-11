@@ -113,7 +113,7 @@ void brake()
 
 void loop()
 {
-  power = setPower('3');
+  power = setPower('1');
   
   float value_A0 = analogRead(A0);
   float value_A1 = analogRead(A1);
