@@ -18,10 +18,11 @@ void loop()
 { 
   int voltage;
   
-  for(int i=0; i <= 255; i+=5) {
+  for(int i=0; i <= 255; i+=10) {
     Serial.print("Voltage: ");
     Serial.println(i);
     rover.setVoltage(i);
     rover.moveForward();
     delay(5000);
+  }
 }
