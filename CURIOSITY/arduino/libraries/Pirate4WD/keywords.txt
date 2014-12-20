@@ -1,0 +1,7 @@
+Pirate4WD	KEYWORD1
+setVoltage	KEYWORD2
+moveForward	KEYWORD2
+moveBack	KEYWORD2
+moveRight	KEYWORD2
+moveLeft	KEYWORD2
+stop	KEYWORD2
