@@ -1,3 +1,10 @@
+/*
+ * Pirate4WDTest.ino - Example that test the wheel movement
+ * in four different directions.
+ * Created by Manuel Parra Z. on December 20, 2014.
+ * Distribute under GNU General Public License version 2.
+ */
+
 #include <Pirate4WD.h>
 
 Pirate4WD rover(5, 4, 6, 7);
