@@ -23,7 +23,7 @@ Pirate4WD::Pirate4WD(int E1, int M1, int E2, int M2)
 
 void Pirate4WD::setVoltage(int voltage)
 {
-	if (voltage > 0 && voltage <= 255) _voltage = voltage;
+	if (voltage >= 0 && voltage <= 255) _voltage = voltage;
 
 	switch(_direction) {
 	case '1':
