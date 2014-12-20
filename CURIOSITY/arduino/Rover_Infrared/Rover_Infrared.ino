@@ -6,7 +6,7 @@
 #define M2 7
 #define D0 11
 #define D1 10
-#define MinVoltage 0
+#define MinVoltage 125
 
 Pirate4WD rover(E1, M1, E2, M2);
 int cal_num = 1000;

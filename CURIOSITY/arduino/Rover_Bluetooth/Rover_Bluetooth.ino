@@ -7,7 +7,7 @@
 #define M2 7
 #define RxD 10
 #define TxD 11
-#define MinVoltage 0
+#define MinVoltage 125
 
 SoftwareSerial btSerial(RxD, TxD);
 Pirate4WD rover(E1, M1, E2, M2);
