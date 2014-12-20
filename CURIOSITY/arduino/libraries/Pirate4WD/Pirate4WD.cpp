@@ -21,7 +21,7 @@ Pirate4WD::Pirate4WD(int E1, int M1, int E2, int M2)
 	pinMode(_E2, OUTPUT);
 }
 
-Pirate4WD::setVoltage(int voltage)
+void Pirate4WD::setVoltage(int voltage)
 {
 	_voltage = voltage;
 
@@ -44,7 +44,7 @@ Pirate4WD::setVoltage(int voltage)
 	}
 }
 
-Pirate4WD::moveForward()
+void Pirate4WD::moveForward()
 {
 	digitalWrite(_M1, HIGH);
 	digitalWrite(_M2, HIGH);
@@ -53,7 +53,7 @@ Pirate4WD::moveForward()
 	_direction = '1';
 }
 
-Pirate4WD::moveBack()
+void Pirate4WD::moveBack()
 {
 	digitalWrite(_M1, LOW);
 	digitalWrite(_M2, LOW);
@@ -62,7 +62,7 @@ Pirate4WD::moveBack()
 	_direction = '5';
 }
 
-Pirate4WD::moveRight()
+void Pirate4WD::moveRight()
 {
 	digitalWrite(_M1, HIGH);
 	digitalWrite(_M2, LOW);
@@ -71,7 +71,7 @@ Pirate4WD::moveRight()
 	_direction = '3';
 }
 
-Pirate4WD::moveLeft()
+void Pirate4WD::moveLeft()
 {
 	digitalWrite(_M1, LOW);
 	digitalWrite(_M2, HIGH);
@@ -80,7 +80,7 @@ Pirate4WD::moveLeft()
 	_direction = '7';
 }
 
-Pirate4WD::stop()
+void Pirate4WD::stop()
 {
 	digitalWrite(_M1, HIGH);
 	digitalWrite(_M2, HIGH);
