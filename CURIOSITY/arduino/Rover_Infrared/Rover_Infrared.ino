@@ -4,9 +4,9 @@
 #define M1 4
 #define E2 6
 #define M2 7
-#define D0 11
+#define D0 13
 #define D1 10
-#define MinVoltage 125
+#define MinVoltage 255
 
 Pirate4WD rover(E1, M1, E2, M2);
 int cal_num = 1000;
@@ -14,6 +14,7 @@ float cal_value_A0 = 0.0;
 float cal_value_A1 = 0.0;
 boolean is_black_A0 = false;
 boolean is_black_A1 = false;
+char previous = '0';
 
 void setup()
 {
@@ -66,8 +67,25 @@ void loop()
     Serial.println("A1 is black");
   }
   
-  if (is_black_A0 == true && is_black_A1 == true) rover.moveForward();
-  else if (is_black_A0 == true && is_black_A1 == false) rover.moveRight();
-  else if (is_black_A0 == false && is_black_A1 == true) rover.moveLeft();
-  else if (is_black_A0 == false && is_black_A1 == false) rover.stop();
+  if (is_black_A0 == true && is_black_A1 == true)
+  {
+    rover.moveForward();
+    previous = '1';
+  }
+  else if (is_black_A0 == true && is_black_A1 == false) 
+  {
+    rover.moveRight();
+    previous = '7';
+  }
+  else if (is_black_A0 == false && is_black_A1 == true) 
+  {
+    rover.moveLeft();
+    previous = '3';
+  }
+  else if (is_black_A0 == false && is_black_A1 == false)
+  {
+    if (previous == '1') rover.stop();
+    if (previous == '3') rover.moveLeft();
+    if (previous == '7') rover.moveRight();
+  }
 }
