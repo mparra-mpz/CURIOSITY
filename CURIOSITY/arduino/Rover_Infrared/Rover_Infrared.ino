@@ -4,7 +4,7 @@
 #define M1 4
 #define E2 6
 #define M2 7
-#define D0 13
+#define D0 11
 #define D1 10
 #define MinVoltage 150
 
@@ -21,12 +21,14 @@ void setup()
   Serial.begin(9600); 
   Serial.println("Start Arduino setup.");
   
+  pinMode(D0, OUTPUT);
+  pinMode(D1, OUTPUT);
   digitalWrite(D0, LOW);
   digitalWrite(D1, LOW);
   delay(500);
-  
   digitalWrite(D0, HIGH);
   digitalWrite(D1, HIGH);
+  
   for (int i = 0; i < cal_num; i++) {
     cal_value_A0 = cal_value_A0 + analogRead(A0);
     cal_value_A1 = cal_value_A1 + analogRead(A1);
