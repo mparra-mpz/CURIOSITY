@@ -1,7 +1,7 @@
 CURIOSITY
 =========
 
-Repository for my first robotic project. The pythoncode , arduino sketchs and the documetation (UML diagram and eletronic diagrams) will be store on this repository. This project was developed using several software tools:
+Repository for my first robotic project. The python code, arduino sketchs and the documetation (UML diagram and eletronic diagrams) will be store on this repository. This project was developed using several software tools:
 
 - Version Control: github (https://github.com/).
 - Interface Develpment Enviroment: Eclipse (https://www.eclipse.org/).
