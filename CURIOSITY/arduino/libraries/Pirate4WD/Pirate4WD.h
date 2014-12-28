@@ -19,6 +19,7 @@ class Pirate4WD
 		void moveRight();
 		void moveLeft();
 		void stop();
+                int getDirection();
 
 	private:
 		int _E1;
@@ -26,7 +27,7 @@ class Pirate4WD
 		int _E2;
 		int _M2;
 		int _voltage;
-		char _direction;
+		int _direction;
 };
 
 #endif

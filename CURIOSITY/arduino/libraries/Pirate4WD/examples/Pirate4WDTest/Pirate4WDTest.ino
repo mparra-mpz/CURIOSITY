@@ -23,21 +23,31 @@ void loop()
   
   Serial.println("Move Forward");
   rover.moveForward();
+  Serial.print("Rover direction: ");
+  Serial.println(rover.getDirection());
   delay(5000);
   
   Serial.println("Move Back");
   rover.moveBack();
+  Serial.print("Rover direction: ");
+  Serial.println(rover.getDirection());
   delay(5000);
   
   Serial.println("Move Right");
   rover.moveRight();
+  Serial.print("Rover direction: ");
+  Serial.println(rover.getDirection());
   delay(5000);
   
   Serial.println("Move Left");
   rover.moveLeft();
+  Serial.print("Rover direction: ");
+  Serial.println(rover.getDirection());
   delay(5000);
   
   Serial.println("Stop");
   rover.stop();
+  Serial.print("Rover direction: ");
+  Serial.println(rover.getDirection());
   delay(5000);
 }

@@ -13,12 +13,12 @@ Pirate4WD::Pirate4WD(int E1, int M1, int E2, int M2)
 	_E2 = E2;
 	_M2 = M2;
 	_voltage = 0;
-	_direction = '0';
+	_direction = 0;
 
+        pinMode(_E1, OUTPUT);
 	pinMode(_M1, OUTPUT);
-	pinMode(_E1, OUTPUT);
-	pinMode(_M2, OUTPUT);
 	pinMode(_E2, OUTPUT);
+	pinMode(_M2, OUTPUT);
 }
 
 void Pirate4WD::setVoltage(int voltage)
@@ -26,16 +26,16 @@ void Pirate4WD::setVoltage(int voltage)
 	if (voltage >= 0 && voltage <= 255) _voltage = voltage;
 
 	switch(_direction) {
-	case '1':
+	case 1:
 		moveForward();
 		break;
-	case '3':
+	case 3:
 		moveRight();
 		break;
-	case '5':
+	case 5:
 		moveBack();
 		break;
-	case '7':
+	case 7:
 		moveLeft();
 		break;
 	default:
@@ -50,7 +50,7 @@ void Pirate4WD::moveForward()
 	digitalWrite(_M2, HIGH);
 	analogWrite(_E1, _voltage);
 	analogWrite(_E2, _voltage);
-	_direction = '1';
+	_direction = 1;
 }
 
 void Pirate4WD::moveBack()
@@ -59,7 +59,7 @@ void Pirate4WD::moveBack()
 	digitalWrite(_M2, LOW);
 	analogWrite(_E1, _voltage);
 	analogWrite(_E2, _voltage);
-	_direction = '5';
+	_direction = 5;
 }
 
 void Pirate4WD::moveRight()
@@ -68,7 +68,7 @@ void Pirate4WD::moveRight()
 	digitalWrite(_M2, LOW);
 	analogWrite(_E1, _voltage);
 	analogWrite(_E2, _voltage);
-	_direction = '3';
+	_direction = 3;
 }
 
 void Pirate4WD::moveLeft()
@@ -77,7 +77,7 @@ void Pirate4WD::moveLeft()
 	digitalWrite(_M2, HIGH);
 	analogWrite(_E1, _voltage);
 	analogWrite(_E2, _voltage);
-	_direction = '7';
+	_direction = 7;
 }
 
 void Pirate4WD::stop()
@@ -86,5 +86,10 @@ void Pirate4WD::stop()
 	digitalWrite(_M2, HIGH);
 	analogWrite(_E1, 0);
 	analogWrite(_E2, 0);
-	_direction = '0';
+	_direction = 0;
+}
+
+int Pirate4WD::getDirection()
+{
+	return _direction;
 }

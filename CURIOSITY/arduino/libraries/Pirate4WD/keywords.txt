@@ -5,3 +5,4 @@ moveBack	KEYWORD2
 moveRight	KEYWORD2
 moveLeft	KEYWORD2
 stop	KEYWORD2
+getDirection	KEYWORD2
