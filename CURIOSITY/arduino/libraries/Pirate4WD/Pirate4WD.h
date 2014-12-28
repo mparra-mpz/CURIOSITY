@@ -19,7 +19,7 @@ class Pirate4WD
 		void moveRight();
 		void moveLeft();
 		void stop();
-                int getDirection();
+		int getDirection();
 
 	private:
 		int _E1;

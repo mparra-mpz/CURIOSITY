@@ -15,7 +15,7 @@ Pirate4WD::Pirate4WD(int E1, int M1, int E2, int M2)
 	_voltage = 0;
 	_direction = 0;
 
-        pinMode(_E1, OUTPUT);
+	pinMode(_E1, OUTPUT);
 	pinMode(_M1, OUTPUT);
 	pinMode(_E2, OUTPUT);
 	pinMode(_M2, OUTPUT);
@@ -23,70 +23,93 @@ Pirate4WD::Pirate4WD(int E1, int M1, int E2, int M2)
 
 void Pirate4WD::setVoltage(int voltage)
 {
-	if (voltage >= 0 && voltage <= 255) _voltage = voltage;
-
-	switch(_direction) {
-	case 1:
-		moveForward();
-		break;
-	case 3:
-		moveRight();
-		break;
-	case 5:
-		moveBack();
-		break;
-	case 7:
-		moveLeft();
-		break;
-	default:
-		stop();
-		break;
+	if (voltage >= 0 && voltage <= 255)
+	{
+		_voltage = voltage;
+		switch(_direction)
+		{
+			case 1:
+				_direction = -1;
+				moveForward();
+				break;
+			case 3:
+				_direction = -1;
+				moveRight();
+				break;
+			case 5:
+				_direction = -1;
+				moveBack();
+				break;
+			case 7:
+				_direction = -1;
+				moveLeft();
+				break;
+			default:
+				_direction = -1;
+				stop();
+				break;
+		}
 	}
 }
 
 void Pirate4WD::moveForward()
 {
-	digitalWrite(_M1, HIGH);
-	digitalWrite(_M2, HIGH);
-	analogWrite(_E1, _voltage);
-	analogWrite(_E2, _voltage);
-	_direction = 1;
+	if (_direction != 1)
+	{
+		digitalWrite(_M1, HIGH);
+		digitalWrite(_M2, HIGH);
+		analogWrite(_E1, _voltage);
+		analogWrite(_E2, _voltage);
+		_direction = 1;
+	}
 }
 
 void Pirate4WD::moveBack()
 {
-	digitalWrite(_M1, LOW);
-	digitalWrite(_M2, LOW);
-	analogWrite(_E1, _voltage);
-	analogWrite(_E2, _voltage);
-	_direction = 5;
+	if (_direction != 5)
+	{
+		digitalWrite(_M1, LOW);
+		digitalWrite(_M2, LOW);
+		analogWrite(_E1, _voltage);
+		analogWrite(_E2, _voltage);
+		_direction = 5;
+	}
 }
 
 void Pirate4WD::moveRight()
 {
-	digitalWrite(_M1, HIGH);
-	digitalWrite(_M2, LOW);
-	analogWrite(_E1, _voltage);
-	analogWrite(_E2, _voltage);
-	_direction = 3;
+	if (_direction != 3)
+	{
+		digitalWrite(_M1, HIGH);
+		digitalWrite(_M2, LOW);
+		analogWrite(_E1, _voltage);
+		analogWrite(_E2, _voltage);
+		_direction = 3;
+	}
 }
 
 void Pirate4WD::moveLeft()
 {
-	digitalWrite(_M1, LOW);
-	digitalWrite(_M2, HIGH);
-	analogWrite(_E1, _voltage);
-	analogWrite(_E2, _voltage);
-	_direction = 7;
+	if (_direction != 7)
+	{
+		digitalWrite(_M1, LOW);
+		digitalWrite(_M2, HIGH);
+		analogWrite(_E1, _voltage);
+		analogWrite(_E2, _voltage);
+		_direction = 7;
+	}
 }
 
 void Pirate4WD::stop()
 {
-	digitalWrite(_M1, HIGH);
-	digitalWrite(_M2, HIGH);
-	analogWrite(_E1, 0);
-	analogWrite(_E2, 0);
-	_direction = 0;
+	if (_direction != 0)
+	{
+		digitalWrite(_M1, HIGH);
+		digitalWrite(_M2, HIGH);
+		analogWrite(_E1, 0);
+		analogWrite(_E2, 0);
+		_direction = 0;
+	}
 }
 
 int Pirate4WD::getDirection()
