@@ -12,15 +12,9 @@ Pirate4WD rover(E1, M1, E2, M2);
 int cal_num = 1000;
 float cal_value_A0 = 0.0;
 float cal_value_A1 = 0.0;
-boolean is_black_A0 = false;
-boolean is_black_A1 = false;
-char previous = '0';
 
 void setup()
-{
-  Serial.begin(9600); 
-  Serial.println("Start Arduino setup.");
-  
+{ 
   pinMode(D0, OUTPUT);
   pinMode(D1, OUTPUT);
   digitalWrite(D0, LOW);
@@ -35,59 +29,22 @@ void setup()
   }
   cal_value_A0 = cal_value_A0 / cal_num;
   cal_value_A1 = cal_value_A1 / cal_num;
-  Serial.print("Black A0: ");
-  Serial.print(cal_value_A0);
-  Serial.print(" -- Black A1: ");
-  Serial.println(cal_value_A1);
   
-  Serial.println("Finish Arduino setup.");
+  rover.setVoltage(MinVoltage);
 }
 
 void loop()
 {
-  rover.setVoltage(MinVoltage);
+  boolean is_black_A0 = false;
+  boolean is_black_A1 = false;
   float value_A0 = analogRead(A0);
   float value_A1 = analogRead(A1);
-  Serial.print("A0: ");  
-  Serial.print(value_A0);
-  Serial.print(" -- A1: ");  
-  Serial.println(value_A1);
   
-  if (value_A0 < 0.75*cal_value_A0 || value_A0 > 1.25*cal_value_A0) {
-    is_black_A0 = false;
-    Serial.println("A0 is white");
-  } else {
-    is_black_A0 = true;
-    Serial.println("A0 is black");
-  }
+  if (value_A0 >= 0.75*cal_value_A0 || value_A0 <= 1.25*cal_value_A0) is_black_A0 = true;
+  if (value_A1 >= 0.75*cal_value_A1 || value_A1 <= 1.25*cal_value_A1) is_black_A1 = true;
   
-  if (value_A1 < 0.75*cal_value_A1 || value_A1 > 1.25*cal_value_A1) {
-    is_black_A1 = false;
-    Serial.println("A1 is white");
-  } else {
-    is_black_A1 = true;
-    Serial.println("A1 is black");
-  }
-  
-  if (is_black_A0 == true && is_black_A1 == true)
-  {
-    rover.moveForward();
-    previous = '1';
-  }
-  else if (is_black_A0 == true && is_black_A1 == false) 
-  {
-    rover.moveRight();
-    previous = '7';
-  }
-  else if (is_black_A0 == false && is_black_A1 == true) 
-  {
-    rover.moveLeft();
-    previous = '3';
-  }
-  else if (is_black_A0 == false && is_black_A1 == false)
-  {
-    if (previous == '1') rover.stop();
-    if (previous == '3') rover.moveLeft();
-    if (previous == '7') rover.moveRight();
-  }
+  if (is_black_A0 == true && is_black_A1 == true) rover.moveForward();
+  else if (is_black_A0 == true && is_black_A1 == false) rover.moveRight();
+  else if (is_black_A0 == false && is_black_A1 == true) rover.moveLeft();
+  else if (is_black_A0 == false && is_black_A1 == false && rover.getDirection() == 1) rover.stop();
 }
