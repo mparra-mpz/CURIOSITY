@@ -31,7 +31,6 @@ void loop()
       auxiliar = BTSerial.read();
       data += auxiliar;
     }
-    Serial.println(data);
     if (data == "D1" or data == "D3") digitalWrite(LED, HIGH);
     else if (data == "D5" or data == "D7") digitalWrite(LED, LOW);
   }
