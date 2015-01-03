@@ -9,7 +9,6 @@
 #define RxD 10
 #define TxD 11
 #define MinVoltage 150
-#define Delay 108
 
 SoftwareSerial btSerial(RxD, TxD);
 Pirate4WD rover(E1, M1, E2, M2);
@@ -18,8 +17,8 @@ void setup()
 {
   pinMode(ENB, OUTPUT);
   digitalWrite(ENB, LOW);
-  delay(500);
   digitalWrite(ENB, HIGH);
+  delay(500);
   btSerial.flush();
   delay(500);
   btSerial.begin(9600);
@@ -35,32 +34,23 @@ int getVoltage(char data)
 
 void loop()
 {
-  char data;
-  if (btSerial.available())
+  if (btSerial.available() > 0)
   {
-    delayMicroseconds(Delay);
-    data = btSerial.read();
-    if (data == 'B')
+    String data = "";
+    char auxiliar;
+    while (btSerial.available() > 0)
     {
-      delayMicroseconds(Delay);
-      data = btSerial.read();
-      if (data == '0') rover.stop();
+      auxiliar = btSerial.read();
+      data += auxiliar;
     }
-    if (data == 'V')
+    if (data == "D1") rover.moveForward();
+    if (data == "D3") rover.moveRight();
+    if (data == "D5") rover.moveBack();
+    if (data == "D7") rover.moveLeft();
+    if (data.charAt(0) == 'V')
     {
-      delayMicroseconds(Delay);
-      data = btSerial.read();
-      int voltage = getVoltage(data);
+      int voltage = getVoltage(data.charAt(1));
       rover.setVoltage(voltage);
-    }
-    if (data == 'D')
-    {
-      delayMicroseconds(Delay);
-      data = btSerial.read();
-      if (data == '1') rover.moveForward();
-      if (data == '3') rover.moveRight();
-      if (data == '5') rover.moveBack();
-      if (data == '7') rover.moveLeft();
     }
   }
 }
