@@ -69,7 +69,7 @@ class Rover(QDeclarativeView):
         Connect to the CONTROL software.
         '''
         if not self.control_start:
-            self.start = True
+            self.control_start = True
             self.control.connect(self.joystick, self.bluetooth)
             self.control_thread.start()
         
