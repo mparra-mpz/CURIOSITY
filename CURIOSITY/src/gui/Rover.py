@@ -23,6 +23,7 @@ class Rover(QDeclarativeView):
         
         self.control = Controller()
         self.control_thread = ControllerThread()
+        self.control_start = False
         
     def set_default_values(self):
         '''
@@ -67,22 +68,19 @@ class Rover(QDeclarativeView):
         '''
         Connect to the CONTROL software.
         '''
-        self.control.connect(self.joystick, self.bluetooth)
-        self.control_thread.start()
+        if not self.control_start:
+            self.start = True
+            self.control.connect(self.joystick, self.bluetooth)
+            self.control_thread.start()
         
     def __disconnect_hw(self):
         '''
         Disconnect from the CONTROL software.
         '''
         self.control_thread.stop_communication()
-        time.sleep(1)
-        counter = 0
-        while self.control_thread.isAlive() and counter < 15:
-            print "Waiting to release the thread."
-            counter = counter + 1
-            time.sleep(1)
-            
+        time.sleep(1)            
         self.control.disconnect()
+        time.sleep(1)
         sys.exit(0)
 
     def update(self, observer):
