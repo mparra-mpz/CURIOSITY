@@ -42,6 +42,7 @@ void loop()
     {
       auxiliar = btSerial.read();
       data += auxiliar;
+      if (data.length() == 2) break;
     }
     if (data == "B0") rover.stop();
     if (data == "D1") rover.moveForward();
